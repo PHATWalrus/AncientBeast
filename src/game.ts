@@ -153,7 +153,7 @@ export default class Game {
 	endGameSound?: any;
 	isAcceptingInput: () => boolean;
 	constructor() {
-		this.discordClient = new DiscordClient('1326442686860070952');
+		this.discordClient = new DiscordClient(process.env.DISCORD_CLIENT_ID || '1326442686860070952');
 		this.discordClient.connect();
 		this.discordClient.UpdateRichPresence({
 			SetDetails: 'In Menus',
