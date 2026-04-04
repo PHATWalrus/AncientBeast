@@ -1,3 +1,4 @@
+import { DiscordClient } from './discord';
 import * as $j from 'jquery';
 import { Animations } from './animations';
 import { CreatureQueue } from './creature_queue';
@@ -51,6 +52,8 @@ import BotController from './bot';
 
 type AnimationID = number;
 export default class Game {
+	discordClient: DiscordClient;
+
 	/* Attributes
 	 *
 	 * NOTE : attributes and variables starting with $ are jQuery elements
@@ -150,6 +153,15 @@ export default class Game {
 	endGameSound?: any;
 	isAcceptingInput: () => boolean;
 	constructor() {
+		this.discordClient = new DiscordClient('1326442686860070952');
+		this.discordClient.connect();
+		this.discordClient.UpdateRichPresence({
+			SetDetails: 'In Menus',
+			SetState: 'Preparing for Battle',
+			SetAssets: { large_image: 'logo', large_text: 'Ancient Beast' },
+			SetTimestamps: { start: Date.now() },
+		});
+
 		this.abilities = [];
 		this.players = [];
 		this.creatures = [];
@@ -462,6 +474,13 @@ export default class Game {
 	 * Launch the game with the given number of player.
 	 */
 	setup(gameMode: number) {
+		this.discordClient.UpdateRichPresence({
+			SetDetails: 'In Match',
+			SetState: `Playing a ${gameMode} Player Match`,
+			SetAssets: { large_image: 'logo', large_text: 'Ancient Beast' },
+			SetTimestamps: { start: Date.now() },
+		});
+
 		// Phaser
 		this.Phaser.scale.parentIsWindow = true;
 		this.Phaser.scale.pageAlignHorizontally = true;
