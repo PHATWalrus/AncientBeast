@@ -1584,6 +1584,13 @@ export default class Game {
 	}
 
 	resetGame() {
+		this.discordClient.UpdateRichPresence({
+			SetDetails: 'In Menus',
+			SetState: 'Preparing for Battle',
+			SetAssets: { large_image: 'logo', large_text: 'Ancient Beast' },
+			SetTimestamps: { start: Date.now() },
+		});
+
 		this.endGameSound;
 		this.UI.showGameSetup();
 		this.stopTimer();
